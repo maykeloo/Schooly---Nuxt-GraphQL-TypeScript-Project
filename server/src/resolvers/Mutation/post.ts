@@ -20,7 +20,7 @@ export interface PostPayloadType {
 
 export const post = {
     postCreate: async (_: any, { post: p }: PostArgs, { prisma, userInfo }: Context): Promise<PostPayloadType> => {
-        const { title, content } = p
+        const { title, content, categories } = p
 
         if(!userInfo) {
             return {
@@ -35,9 +35,11 @@ export const post = {
 
         if(!title || !content) {
             return {
-                userErrors: [{
-                    message: "You must provide a title and a content to create a post"
-                }],
+                userErrors: [
+                    {
+                        message: "You must provide a title and a content to create a post"
+                    }
+                ],
                 post: null
             }
         }
@@ -49,19 +51,21 @@ export const post = {
             }
         })
 
-        await prisma.categoriesOnPosts.create({
-            data: {
-                post: {
-                    connect: {
-                        id: post.id
-                    }
-                },
-                category: {
-                    create: {
-                        name: "TEST 2",
-                    }
-                },
-            }
+        categories.forEach(async (category) => {
+            await prisma.categoriesOnPosts.create({
+                data: {
+                    post: {
+                        connect: {
+                            id: post.id
+                        }
+                    },
+                    category: {
+                        create: {
+                            name: category.toLowerCase(),
+                        }
+                    },
+                }
+            })
         })
 
         return {

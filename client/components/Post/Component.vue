@@ -3,9 +3,15 @@ import { useMutation } from "@vue/apollo-composable";
 import { useRoute } from "vue-router";
 import { PUBLISH_POST } from "../../api/mutations";
 import { GET_PROFILE } from "../../api/queries";
-import timeSince from '../../utils/timeSince'
+import timeSince from "../../utils/timeSince";
 
 const { params } = useRoute();
+
+interface Category {
+  category: {
+    name: string;
+  };
+}
 
 const props = defineProps<{
   title: string;
@@ -15,6 +21,7 @@ const props = defineProps<{
   createdAt: string;
   published?: boolean;
   isMyProfile?: boolean;
+  categories?: Category[];
 }>();
 
 const { mutate: postPublish, loading } = useMutation(PUBLISH_POST, {
@@ -37,19 +44,32 @@ const { mutate: postPublish, loading } = useMutation(PUBLISH_POST, {
     <div class="post-top">
       <div class="post-top-info">
         <a :href="`/profile/${props.id}`" class="user">
-          <img src="@/assets/icons/icon-avatar.png" alt="">
-          <span class="post-author">{{props.user}}</span>
+          <img src="@/assets/icons/icon-avatar.png" alt="" />
+          <span class="post-author">{{ props.user }}</span>
         </a>
         <span>&middot;</span>
-        <span class="time-since"> {{ timeSince(Number(props.createdAt))}} ago</span>
+        <span class="time-since">
+          {{ timeSince(Number(props.createdAt)) }} ago</span
+        >
+      </div>
+      <div class="categories-on-post-wrapper">
+        <a
+          class="category-on-post"
+          :href="`/category/${category.category.name.toLowerCase()}`"
+          v-for="category in categories"
+        >
+          <span>{{ category.category.name }}</span>
+        </a>
       </div>
     </div>
     <div class="post-bottom">
       <span class="post-title">{{ props.title }}</span>
-      <button v-if="props.isMyProfile" @click="postPublish()">{{ props.published ? "Unpublish" : "Publish" }}</button>
+      <button v-if="props.isMyProfile" @click="postPublish()">
+        {{ props.published ? "Unpublish" : "Publish" }}
+      </button>
       <p class="post-content">{{ props.content }}</p>
     </div>
-    <p v-if="loading"><img src="@/assets/icons/loader.svg" alt=""></p>
+    <p v-if="loading"><img src="@/assets/icons/loader.svg" alt="" /></p>
   </div>
 </template>
 
@@ -62,14 +82,16 @@ const { mutate: postPublish, loading } = useMutation(PUBLISH_POST, {
   width: 100%;
   border-radius: 0.5rem;
   gap: 1.5rem;
+
   .post-top {
     display: flex;
     justify-content: space-between;
+
     .post-top-info {
       display: flex;
       gap: 1rem;
       align-items: center;
-    
+
       .user {
         display: flex;
         align-items: center;
@@ -77,16 +99,16 @@ const { mutate: postPublish, loading } = useMutation(PUBLISH_POST, {
         text-decoration: none;
         color: black;
       }
-    
+
       img {
         width: 3rem;
         object-fit: contain;
       }
-      
+
       .post-author {
         font-weight: 500;
       }
-      
+
       .time-since {
         color: rgb(182, 182, 182);
         font-weight: 300;
@@ -97,7 +119,22 @@ const { mutate: postPublish, loading } = useMutation(PUBLISH_POST, {
   .post-bottom {
     .post-title {
       font-size: 2rem;
-      font-weight: 500
+      font-weight: 500;
+    }
+  }
+
+  .categories-on-post-wrapper {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+
+    .category-on-post {
+      background-color: black;
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      padding: 0.35rem 1.5rem;
+      font-size: 0.8rem;
     }
   }
 }
@@ -105,9 +142,6 @@ const { mutate: postPublish, loading } = useMutation(PUBLISH_POST, {
 .post.published {
   background: aquamarine;
 }
-
-
-
 
 .post-content {
   margin-top: 2rem;

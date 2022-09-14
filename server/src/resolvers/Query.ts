@@ -1,5 +1,5 @@
 import {Context} from '../index'
-import {Post, Profile, User} from '.prisma/client'
+import {Category, Post, Profile, User} from '.prisma/client'
 import {PostPayloadType} from './Mutation/post'
 
 interface UserPayload {
@@ -73,7 +73,22 @@ export const Query = {
             ...profile, isMyProfile,
         };
     }, 
-    categories: async (_: any, { userId }: { userId: string }, { prisma }: Context) => {
-        return await prisma.category.findMany()
+    categories: (_: any, { userId }: { userId: string }, { prisma }: Context) => {
+        return prisma.category.findMany()
+    },
+    postWithCategory: (_: any, { category }: { category: string }, { prisma }: Context) => {
+        return prisma.post.findMany({
+            where: {
+                categories: {
+                    some: {
+                        category: {
+                            name: {
+                                contains: category
+                            }
+                        }
+                    }
+                }
+            }
+        })
     }
 }

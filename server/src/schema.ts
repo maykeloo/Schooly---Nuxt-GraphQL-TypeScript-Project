@@ -7,6 +7,7 @@ export const typeDefs = gql`
         me: MePayload
         profile(userId: ID!): Profile
         categories: [CategoriesOnPosts!]
+        postWithCategory(category: String!): [Post!]
     }
 
     type Mutation {

@@ -1,48 +1,51 @@
-import { userLoader } from '../loaders/userLoader'
-import {Context} from "../index";
+import { userLoader } from "../loaders/userLoader";
+import { Context } from "../index";
 
 interface PostParent {
-    id: number,
-    title: string,
-    content: string,
-    authorId: number,
+  id: number;
+  title: string;
+  content: string;
+  authorId: number;
+}
+
+interface PostCategoryPayload {
+  postId: number;
+  category: {
+    name: string;
+  };
 }
 
 export const Post = {
-    user: (parent: PostParent) => {
-        return userLoader.load(parent.authorId)
-    },
-    // categories: async (parent: PostParent, __: any, { prisma }: Context) => {
-    //   const categoriesForPost = await prisma.categoriesOnPosts.findMany({
-    //     where: {
-    //       postId: parent.id,
-    //     }
-    //   })
-    //   return categoriesForPost
-    // }
-    categories: async (parent: PostParent, __: any, { prisma }: Context) => {
-      const categoriesForPost = await prisma.category.findMany({
-        where: {
-          posts: {
-            some: {
-              post: {
-                id: parent.id
-              }
-            }
-          }
-        }
-      })
-      console.log(categoriesForPost)
-      return [
-            {
+  user: (parent: PostParent) => {
+    return userLoader.load(parent.authorId);
+  },
+  categories: async (parent: PostParent, __: any, { prisma }: Context) => {
+    const categoriesForPost = await prisma.category.findMany({
+      where: {
+        posts: {
+          every: {
+            post: {
+              categories: {
+                every: {
                   postId: parent.id,
-                  category: {
-                    name: categoriesForPost[0].name
-                  }
+                },
+              },
             },
-      ];
-    }
-}
+          },
+        },
+      },
+    });
 
+    let data: PostCategoryPayload[] = [];
 
-
+    categoriesForPost.forEach((category) => {
+      data.push({
+        postId: parent.id,
+        category: {
+          name: category.name,
+        },
+      });
+    });
+    return data;
+  },
+};

@@ -7,9 +7,9 @@ interface PostParent {
     authorId: number,
 }
 
-export const Category = {
+export const Categories = {
     category: async (parent: PostParent, __: any, { prisma }: Context) => {
-      console.log('TEST')
+      
     }
 }
 

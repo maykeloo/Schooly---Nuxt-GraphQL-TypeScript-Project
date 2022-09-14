@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import { useQuery } from '@vue/apollo-composable'
-import { GET_POSTS } from '../../api/queries'
+import { ApolloError } from '@apollo/client/errors';
+import { Post } from '~~/types/User';
 
-const { result, loading, error } = useQuery(GET_POSTS);
+const props = defineProps<{
+  result: Post[],
+  loading: boolean,
+  error: ApolloError
+}>()
 
 </script>
 
@@ -10,9 +14,9 @@ const { result, loading, error } = useQuery(GET_POSTS);
   <p v-if="loading"><img src="@/assets/icons/loader.svg" alt=""></p>
   <div v-else-if="!error && !loading" class="post-wrapper">
     <PostComponent 
-      v-for="post in result?.posts"
-      :user="post.user.name" 
-      :id="post.user.id" 
+      v-for="post in props.result"
+      :user="post.user?.name" 
+      :id="post.user?.id" 
       :title="post.title" 
       :createdAt="post.createdAt"
       :categories="post.categories"

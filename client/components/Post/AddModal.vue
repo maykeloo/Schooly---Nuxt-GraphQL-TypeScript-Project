@@ -4,7 +4,7 @@ import { ref } from "vue";
 import { useMutation } from "@vue/apollo-composable";
 import { POST_CREATE } from "../../api/mutations";
 import { GET_PROFILE } from "../../api/queries";
-import { useRoute } from "vue-router";
+import { useRoute, RouteLocationNormalizedLoaded } from "vue-router";
 
 interface PostVariables {
   title: string;
@@ -12,14 +12,14 @@ interface PostVariables {
 }
 
 const route = useRoute();
-const { params } = route;
+const { params }: RouteLocationNormalizedLoaded = route;
 
 const content = ref<string>("");
 const title = ref<string>("");
 
 const show = ref<boolean>(false);
-const handleShow = () => (show.value = true);
-const handleClose = () => (show.value = false);
+const handleShow = (): boolean => (show.value = true);
+const handleClose = (): boolean => (show.value = false);
 
 const { mutate: postCreate } = useMutation(POST_CREATE, () => ({
   variables: {

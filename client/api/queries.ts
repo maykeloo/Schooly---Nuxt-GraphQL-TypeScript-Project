@@ -51,3 +51,12 @@ export const GET_PROFILE_DETAILS = gql`
   }
 `
 
+export const GET_POSTS_WITH_CATEGORY = gql`
+  query($category: String!) {
+    postWithCategory(category: $category) {
+      title
+      content
+    }
+  }
+`
+
