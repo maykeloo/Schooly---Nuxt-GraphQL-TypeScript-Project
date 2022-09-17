@@ -8,7 +8,7 @@ interface PostArgs {
         content?: string,
         categories:  string[],
     }
-    postId:       string
+    postId: string
 }
 
 export interface PostPayloadType {
@@ -147,6 +147,20 @@ export const post = {
                 post: null
             }
         }
+        await prisma.categoriesOnPosts.deleteMany({
+            where: {
+                postId: Number(postId)
+            }
+        })
+        await prisma.category.deleteMany({
+            where: {
+                posts: {
+                    every: {
+                        postId: Number(postId)
+                    }
+                }
+            }
+        })
         await prisma.post.delete({
             where: {
                 id: Number(postId)
@@ -160,7 +174,7 @@ export const post = {
     },
     postPublish: async (_: any, { postId }: PostArgs, { prisma, userInfo }: Context) => {
         const error = await canUserMutatePost({ userId: userInfo!.userId, postId: postId, prisma });
-
+        console.log(postId)
         if(error) return error
          
         if(!userInfo) {

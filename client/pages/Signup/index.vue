@@ -36,57 +36,66 @@ const handleClick = () => {
 </script>
 
 <template>
-  <div class="login-content-wrapper">
-    <div class="login-container-left">
-      <div class="login-content-top-information">
-        <h1>Sign up</h1>
-        <p>Enter credentials to create your account.</p>
-      </div>
-      <div class="login-button google">
-        <img src="@/assets/icons/icon-google.svg" alt="" />
-        <span>Sign up with Google</span>
-      </div>
-      <div class="or-line">
-        <span>or</span>
-      </div>
-      <form>
-        <label for="name">
-          <span>Name</span>
-          <input type="text" name="name" id="name" v-model="name" />
-        </label>
-        <label for="email">
-          <span>Email address</span>
-          <input type="email" name="email" id="email" v-model="email" />
-        </label>
-        <label for="password">
-          <div>
-            <span>Password</span>
-            <span class="password-hint">Forgot password?</span>
-          </div>
-          <input type="password" name="password" id="password" v-model="password"/>
-        </label>
-        <label for="bio">
-          <span>Bio</span>
-          <textarea type="text" name="bio" id="bio" v-model="bio"></textarea>
-        </label>
-        <div class="error" v-if="errorMessage">
-          <img src="@/assets/icons/icon-login-error.png" alt="" />
-          <p>{{ errorMessage }}</p>
+  <div class="form-wrapper">
+    <div class="login-content-wrapper">
+      <div class="login-container-left">
+        <div class="login-content-top-information">
+          <h1>Sign up</h1>
+          <p>Enter credentials to create your account.</p>
         </div>
-        <button type="submit" class="submit-button" @click.prevent="handleClick">
-          Sign up
-        </button>
-      </form>
-      <div class="signup-label">
-        <span>Already a member? </span><NuxtLink to="/signin">Sign Up</NuxtLink>
+        <div class="login-button google">
+          <img src="@/assets/icons/icon-google.svg" alt="" />
+          <span>Sign up with Google</span>
+        </div>
+        <div class="or-line">
+          <span>or</span>
+        </div>
+        <form>
+          <label for="name">
+            <span>Name</span>
+            <input type="text" name="name" id="name" v-model="name" />
+          </label>
+          <label for="email">
+            <span>Email address</span>
+            <input type="email" name="email" id="email" v-model="email" />
+          </label>
+          <label for="password">
+            <div>
+              <span>Password</span>
+              <span class="password-hint">Forgot password?</span>
+            </div>
+            <input type="password" name="password" id="password" v-model="password"/>
+          </label>
+          <label for="bio">
+            <span>Bio</span>
+            <textarea type="text" name="bio" id="bio" v-model="bio"></textarea>
+          </label>
+          <div class="error" v-if="errorMessage">
+            <img src="@/assets/icons/icon-login-error.png" alt="" />
+            <p>{{ errorMessage }}</p>
+          </div>
+          <button type="submit" class="submit-button" @click.prevent="handleClick">
+            Sign up
+          </button>
+        </form>
+        <div class="signup-label">
+          <span>Already a member? </span><NuxtLink to="/signin">Sign Up</NuxtLink>
+        </div>
       </div>
+      <div class="login-container-right"></div>
     </div>
-    <div class="login-container-right"></div>
   </div>
 </template>
 
 
 <style scoped lang="scss">
+  .form-wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  } 
   .login-content-wrapper {
     width: 50vw;
     margin: 0 auto;

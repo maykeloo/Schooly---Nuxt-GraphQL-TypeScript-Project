@@ -1,17 +1,33 @@
 <script setup lang="ts">
 import { useQuery } from "@vue/apollo-composable";
-import { GET_POSTS } from "../api/queries";
+import getToken from "~~/utils/getToken";
+import { GET_POSTS, GET_PROFILE_DETAILS } from "~/api/queries";
+import { JWT } from '@/utils/getToken'
+import {definePageMeta} from "#imports";
 
 definePageMeta({
   middleware: "auth",
 });
-const { result, loading, error } = useQuery(GET_POSTS);
+const { result: postResult, loading, error } = useQuery(GET_POSTS);
+const userInfo = ref<JWT>()
+
+if(process.client) {
+  userInfo.value = await getToken()
+}
+const { result: profileResult } = useQuery(GET_PROFILE_DETAILS, {
+  userId: userInfo?.value?.userId,
+}); 
+
+
 </script>
 
 <template>
   <NuxtLayout name="threeview">
     <template #main>
-      <PostList :result="result?.posts" :loading="loading" :error="error"></PostList>
+      <div v-if="profileResult?.profile?.isMyProfile">
+        <PostAddModal />
+      </div>
+      <PostList :result="postResult?.posts" :loading="loading" :error="error"></PostList>
     </template>
   </NuxtLayout>
 </template>

@@ -1,6 +1,6 @@
 import jwt_decode from "jwt-decode";
 
-interface JWT {
+export interface JWT {
     exp: string
     iat: string
     userId: string

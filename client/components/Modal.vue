@@ -6,8 +6,7 @@
           <div class="modal-body">
             <slot name="body"></slot>
           </div>
-          <div class="modal-footer">
-          </div>
+          <div class="modal-footer"></div>
         </div>
       </div>
     </div>
@@ -33,7 +32,8 @@
 }
 
 .modal-container {
-  width: 300px;
+  min-width: 30vw;
+  max-width: 35vw;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;
@@ -41,6 +41,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
   font-family: Helvetica, Arial, sans-serif;
+  position: relative;
 }
 
 .modal-header h3 {
@@ -78,5 +79,4 @@
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
-
 </style>

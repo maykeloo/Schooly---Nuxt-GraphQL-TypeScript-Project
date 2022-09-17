@@ -4,6 +4,7 @@ export const typeDefs = gql`
     type Query {
         posts: [Post!]!
         post(postId: ID!): Post!
+        userPosts(userId: ID!): [Post!]
         me: MePayload
         profile(userId: ID!): Profile
         categories: [CategoriesOnPosts!]

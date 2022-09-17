@@ -13,7 +13,7 @@ model Post {
   content    String
   authorId   Int
   createdAt  DateTime            @default(now())
-  published  Boolean             @default(false)
+  published  Boolean             @default(true)
   updatedAt  DateTime            @updatedAt
   author     User                @relation(fields: [authorId], references: [id])
   categories CategoriesOnPosts[]

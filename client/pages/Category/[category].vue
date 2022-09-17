@@ -1,11 +1,11 @@
 
 <script setup lang="ts">
-      import { useRoute } from 'vue-router';
+      import { useRoute, RouteLocationNormalizedLoaded } from 'vue-router';
       import { useQuery } from "@vue/apollo-composable";
       import { GET_POSTS_WITH_CATEGORY } from '@/api/queries'
       
       const route = useRoute();
-      const { params } = route;
+      const { params }: RouteLocationNormalizedLoaded = route;
       
       const { result, error, loading } = useQuery(GET_POSTS_WITH_CATEGORY, {
             category: params.category,
@@ -14,7 +14,12 @@
 
 <template>
   <div>
-      <PostList :result="result?.postWithCategory" :loading="loading" :error="error"></PostList>
+      <NuxtLayout name="threeview">
+            <template #main>
+                  <h1>#{{ params.category }}</h1>
+                  <PostList :result="result?.postWithCategory" :loading="loading" :error="error"></PostList>
+            </template>
+      </NuxtLayout>
   </div>
 </template>
 

@@ -1,24 +1,3 @@
-<script lang="ts" setup>
-import getToken from "../../utils/getToken";
-import { ref } from "vue";
-import { GET_PROFILE_DETAILS } from "~~/api/queries";
-import { useQuery } from "@vue/apollo-composable";
-import { ProfileDetails } from "~~/types/User";
-
-const userId = ref<string>("");
-const profile = ref<ProfileDetails | null>(null);
-
-onBeforeMount(async () => {
-  userId.value = (await getToken()).userId;
-});
-const { onResult } = useQuery(GET_PROFILE_DETAILS, {
-  userId: userId,
-});
-onResult((result) => {
-  profile.value = result.data.profile;
-});
-</script>
-
 <template>
   <div class="sidebar-wrapper">
     <div class="header">
@@ -26,18 +5,6 @@ onResult((result) => {
         <h2>LOGO</h2>
       </a>
     </div>
-    <a :href="`/profile/${userId}`">
-      <div class="user-info">
-        <div>
-          <img src="@/assets/icons/icon-avatar.png" alt="" />
-        </div>
-        <div>
-          <p class="name">{{ profile?.user.name }}</p>
-          <p class="email">{{ profile?.user.email }}</p>
-          <p class="bio">{{ profile?.bio }}</p>
-        </div>
-      </div>
-    </a>
     <div class="nav-wrapper">
       <nav>
         <NavList/>
@@ -53,6 +20,7 @@ onResult((result) => {
   width: 100%;
   height: 100%;
   padding: 4rem 2rem 2rem 4rem;
+  border-right: 1px solid #ccc;
 
   a {
     color: black;

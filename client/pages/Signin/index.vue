@@ -31,44 +31,55 @@ const handleClick = (e) => {
 </script>
 
 <template>
-  <div class="login-content-wrapper">
-    <div class="login-container-left">
-      <div class="login-content-top-information">
-        <h1>Log in</h1>
-        <p>Enter your credentials to access your account.</p>
-      </div>
-      <div class="login-button google">
-        <img src="@/assets/icons/icon-google.svg" alt="" />
-        <span>Log in with Google</span>
-      </div>
-      <div class="or-line"><span>or</span></div>
-      <form>
-        <label for="email">
-          <span>Email address</span>
-          <input type="email" name="email" id="email" v-model="email" />
-        </label>
-        <label for="password">
-          <div>
-            <span>Password</span>
-            <span class="password-hint">Forgot password?</span>
-          </div>
-          <input type="password" name="password" id="password" v-model="password"/>
-        </label>
-        <div class="error" v-if="errorMessage">
-          <img src="@/assets/icons/icon-login-error.png" alt="" />
-          <p>{{ errorMessage }}</p>
+  <div class="form-wrapper">
+    <div class="login-content-wrapper">
+      <div class="login-container-left">
+        <div class="login-content-top-information">
+          <h1>Log in</h1>
+          <p>Enter your credentials to access your account.</p>
         </div>
-        <button type="submit" class="submit-button" @click="handleClick">Log in</button>
-      </form>
-      <div class="signup-label">
-        <span>Not a member? </span><NuxtLink to="/signup">Sign Up</NuxtLink>
+        <div class="login-button google">
+          <img src="@/assets/icons/icon-google.svg" alt="" />
+          <span>Log in with Google</span>
+        </div>
+        
+        <div class="or-line"><span>or</span></div>
+        <form>
+          <label for="email">
+            <span>Email address</span>
+            <input type="email" name="email" id="email" v-model="email" />
+          </label>
+          <label for="password">
+            <div>
+              <span>Password</span>
+              <span class="password-hint">Forgot password?</span>
+            </div>
+            <input type="password" name="password" id="password" v-model="password"/>
+          </label>
+          <div class="error" v-if="errorMessage">
+            <img src="@/assets/icons/icon-login-error.png" alt="" />
+            <p>{{ errorMessage }}</p>
+          </div>
+          <button type="submit" class="submit-button" @click="handleClick">Log in</button>
+        </form>
+        <div class="signup-label">
+          <span>Not a member? </span><NuxtLink to="/signup">Sign Up</NuxtLink>
+        </div>
       </div>
+      <div class="login-container-right"></div>
     </div>
-    <div class="login-container-right"></div>
   </div>
 </template>
 
 <style scoped lang="scss">
+.form-wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .login-content-wrapper {
   width: 50vw;
   margin: 0 auto;

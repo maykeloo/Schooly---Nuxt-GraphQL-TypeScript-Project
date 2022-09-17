@@ -11,6 +11,7 @@ interface PostParent {
 interface PostCategoryPayload {
   postId: number;
   category: {
+    id: number
     name: string;
   };
 }
@@ -42,6 +43,7 @@ export const Post = {
       data.push({
         postId: parent.id,
         category: {
+          id: category.id,
           name: category.name,
         },
       });

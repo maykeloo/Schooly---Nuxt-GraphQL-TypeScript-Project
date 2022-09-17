@@ -22,12 +22,9 @@ export default defineNuxtConfig({
     },
     buildModules: [
       '@nuxtjs/dotenv',
-      '@nuxtjs/moment',
     ],
     css: [
       '@/assets/css/global.css'
     ],
-    moment: {
-      plugin: false
-    }
+
 })

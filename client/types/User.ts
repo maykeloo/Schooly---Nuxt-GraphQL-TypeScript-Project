@@ -1,3 +1,5 @@
+import { Category } from "./Category"
+
 export interface User {
     id:            number
     email:         string
@@ -16,6 +18,7 @@ export interface Post {
     published:     boolean
     createdAt:     string
     user:          User
+    categories:    Category[]
 }
 
 export interface Profile {

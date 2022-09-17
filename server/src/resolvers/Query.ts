@@ -19,6 +19,22 @@ export const Query = {
             },]
         })
     }, 
+    userPosts: async (_: any, { userId }: { userId: string }, { prisma, userInfo}: Context) => {
+        const isMyProfile = Number(userId) === userInfo?.userId;
+        console.log('test')
+        if(!isMyProfile) return await prisma.post.findMany({
+            where: {
+                authorId: Number(userId),
+                published: true
+            }
+        })
+
+        return await prisma.post.findMany({
+            where: {
+                authorId: Number(userId),
+            }
+        })
+    },
     post: async (_: any, {postId}: { postId: string }, {prisma}: Context): Promise<Post | PostPayloadType> => {
         const post = await prisma.post.findUnique({
             where: {

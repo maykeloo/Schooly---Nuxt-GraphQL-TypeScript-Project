@@ -26,6 +26,7 @@
     width: 50vw;
     height: fit-content;
     margin: 0 auto;
+    padding: 4rem 2rem ;
     padding-top: 4rem;
       position: relative;
 

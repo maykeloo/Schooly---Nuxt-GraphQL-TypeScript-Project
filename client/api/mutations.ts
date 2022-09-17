@@ -42,8 +42,24 @@ export const POST_CREATE = gql`
             post {
                 title
                 content
-                categories
+                categories {
+                    category {
+                        id
+                        name
+                    }
+                }
             }
         }
+    }
+`
+
+export const DELETE_POST = gql`
+    mutation($postId: ID!) {
+    postDelete(postId: $postId) {
+        post {
+        title
+        content
+        }
+    }
     }
 `
