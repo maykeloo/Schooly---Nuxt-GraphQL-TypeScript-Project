@@ -2455,6 +2455,11 @@ graphql-tag@^2.12.6:
   dependencies:
     tslib "^2.1.0"
 
+graphql-ws@^5.11.1:
+  version "5.11.1"
+  resolved "https://registry.yarnpkg.com/graphql-ws/-/graphql-ws-5.11.1.tgz#f9c8b7c64986d1d921f2a820dc68a393853c94e8"
+  integrity sha512-AlOO/Gt0fXuSHXe/Weo6o3rIQVnH5MW7ophzeYzL+vYNlkf0NbWRJ6IIFgtSLcv9JpTlQdxSpB3t0SnM47/BHA==
+
 graphql@^16.6.0:
   version "16.6.0"
   resolved "https://registry.yarnpkg.com/graphql/-/graphql-16.6.0.tgz#c2dcffa4649db149f6282af726c8c83f1c7c5fdb"
@@ -4324,6 +4329,11 @@ requires-port@^1.0.0:
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
   integrity sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==
 
+resize-observer-polyfill@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
+  integrity sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==
+
 resolve-from@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/resolve-from/-/resolve-from-5.0.0.tgz#c35225843df8f776df21c57557bc087e9dfdfc69"
@@ -5204,6 +5214,13 @@ vue-demi@*, vue-demi@^0.13.1:
   resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.13.11.tgz#7d90369bdae8974d87b1973564ad390182410d99"
   integrity sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A==
 
+vue-js-modal@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/vue-js-modal/-/vue-js-modal-2.0.1.tgz#748ba2533c5b5eaf8234c6320b148663357c1163"
+  integrity sha512-5FUwsH2zoxRKX4a7wkFAqX0eITCcIMunJDEfIxzHs2bHw9o20+Iqm+uQvBcg1jkzyo1+tVgThR/7NGU8djbD8Q==
+  dependencies:
+    resize-observer-polyfill "^1.5.1"
+
 vue-router@^4.0.14:
   version "4.1.5"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-4.1.5.tgz#256f597e3f5a281a23352a6193aa6e342c8d9f9a"
@@ -5238,9 +5255,9 @@ webpack-sources@^3.2.3:
   integrity sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==
 
 webpack-virtual-modules@^0.4.3:
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/webpack-virtual-modules/-/webpack-virtual-modules-0.4.4.tgz#a19fcf371923c59c4712d63d7d194b1e4d8262cc"
-  integrity sha512-h9atBP/bsZohWpHnr+2sic8Iecb60GxftXsWNLLLSqewgIsGzByd2gcIID4nXcG+3tNe4GQG3dLcff3kXupdRA==
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/webpack-virtual-modules/-/webpack-virtual-modules-0.4.5.tgz#e476842dab5eafb7beb844aa2f747fc12ebbf6ec"
+  integrity sha512-8bWq0Iluiv9lVf9YaqWQ9+liNgXSHICm+rg544yRgGYaR8yXZTVBaHZkINZSB2yZSWo4b0F6MIxqJezVfOEAlg==
 
 whatwg-url@^5.0.0:
   version "5.0.0"
@@ -5301,7 +5318,7 @@ wrappy@1:
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
   integrity sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==
 
-ws@^8.6.0:
+ws@^8.6.0, ws@^8.8.1:
   version "8.8.1"
   resolved "https://registry.yarnpkg.com/ws/-/ws-8.8.1.tgz#5dbad0feb7ade8ecc99b830c1d77c913d4955ff0"
   integrity sha512-bGy2JzvzkPowEJV++hF07hAD6niYSr0JzBNo/J29WsB57A2r7Wlc1UFcTR9IzrPvuNVO4B8LGqF8qcpsVOhJCA==

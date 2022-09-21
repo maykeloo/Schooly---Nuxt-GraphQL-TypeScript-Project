@@ -1,5 +1,5 @@
 import {Context} from '../index'
-import {Category, Post, Profile, User} from '.prisma/client'
+import { Post, User} from '.prisma/client'
 import {PostPayloadType} from './Mutation/post'
 
 interface UserPayload {
@@ -18,10 +18,9 @@ export const Query = {
                 createdAt: "desc"
             },]
         })
-    }, 
+    },
     userPosts: async (_: any, { userId }: { userId: string }, { prisma, userInfo}: Context) => {
         const isMyProfile = Number(userId) === userInfo?.userId;
-        console.log('test')
         if(!isMyProfile) return await prisma.post.findMany({
             where: {
                 authorId: Number(userId),

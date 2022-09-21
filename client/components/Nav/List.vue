@@ -5,6 +5,10 @@ import { GET_PROFILE_DETAILS } from "~~/api/queries";
 import { useQuery } from "@vue/apollo-composable";
 import { ProfileDetails } from "~~/types/User";
 
+defineEmits<{
+  (e: 'search'): void
+}>()
+
 const userId = ref<string>("");
 const profile = ref<ProfileDetails | null>(null);
 
@@ -23,11 +27,12 @@ const logOut = () => {
   localStorage.removeItem('token');
   window.location.href = "/signin";
 }
+
 </script>
 
 <template>
   <ul>
-    <li>
+    <li @click="$emit('search')">
       <img src="@/assets/icons/icon-search.svg" alt="" />
       <span>Search</span>
     </li>
@@ -55,11 +60,10 @@ const logOut = () => {
       <img src="@/assets/icons/icon-settings.png" alt="" />
       <span>Settings</span>
     </li>
-    <li class="post">
-      <img src="@/assets/icons/icon-add-post.svg" alt="" />
-      <span>Add Post</span>
+    <li @click="logOut()">
+      <img src="@/assets/icons/icon-logout.svg" alt="">
+      <span>Log out</span>
     </li>
-    <span @click="logOut" class="logout"><span>Logout</span><img src="@/assets/icons/icon-logout.svg" alt=""></span>
   </ul>
 </template>
 
@@ -72,7 +76,7 @@ const logOut = () => {
 
   .logout {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 1rem;
     text-decoration: underline;

@@ -17,12 +17,25 @@ model Post {
   updatedAt  DateTime            @updatedAt
   author     User                @relation(fields: [authorId], references: [id])
   categories CategoriesOnPosts[]
+  comments   Comment[]
 }
 
 model Category {
   id    Int                 @id @default(autoincrement())
   name  String
   posts CategoriesOnPosts[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  postId    Int
+  createdAt DateTime @default(now())
+  published Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+  content   String
+  user      User     @relation(fields: [userId], references: [id])
+  post      Post     @relation(fields: [postId], references: [id])
+  userId    Int
 }
 
 model CategoriesOnPosts {
@@ -36,14 +49,15 @@ model CategoriesOnPosts {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
   name      String?
   password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   posts     Post[]
   profile   Profile?
+  Comment   Comment[]
 }
 
 model Profile {

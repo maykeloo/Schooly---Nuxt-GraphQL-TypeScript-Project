@@ -16,7 +16,7 @@
   <div>
       <NuxtLayout name="threeview">
             <template #main>
-                  <h1>#{{ params.category }}</h1>
+                  <h1 class="category-name">#{{ params.category }}</h1>
                   <PostList :result="result?.postWithCategory" :loading="loading" :error="error"></PostList>
             </template>
       </NuxtLayout>
@@ -24,5 +24,7 @@
 </template>
 
 <style scoped lang="scss">
-
+.category-name {
+  margin-bottom: 2rem;
+}
 </style>

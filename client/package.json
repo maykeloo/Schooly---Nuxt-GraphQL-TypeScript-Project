@@ -18,8 +18,11 @@
     "@nuxtjs/dotenv": "^1.4.1",
     "@vue/apollo-composable": "^4.0.0-alpha.19",
     "graphql": "^16.6.0",
+    "graphql-ws": "^5.11.1",
     "jwt-decode": "^3.1.2",
     "nuxt-svg-loader": "^1.2.0",
-    "vue-apollo": "^3.1.0"
+    "vue-apollo": "^3.1.0",
+    "vue-js-modal": "^2.0.1",
+    "ws": "^8.8.1"
   }
 }

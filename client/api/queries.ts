@@ -8,6 +8,17 @@ export const GET_POSTS = gql`
       content
       createdAt
       published
+      comment {
+        id
+        content
+        userId
+        postId
+        createdAt
+        user {
+          id
+          name
+        }
+      }
       user {
         id
         name
@@ -27,6 +38,7 @@ export const GET_PROFILE = gql`
       bio
       isMyProfile
       user {
+        id
         name
         email
         createdAt
@@ -35,6 +47,22 @@ export const GET_PROFILE = gql`
           title
           content
           createdAt
+          comment {
+            content
+            postId
+            createdAt
+            id
+            userId
+            user {
+              id
+              name
+            }
+          }
+          categories {
+            category {
+              name
+            }
+          }
           published
         }
       }
@@ -48,6 +76,16 @@ export const GET_POST = gql`
       id
       title
       content
+      comment {
+        content
+        userId
+        createdAt
+        user {
+          id
+          name
+        }
+        createdAt
+      }
     }
   }
 `
@@ -84,6 +122,14 @@ export const GET_POSTS_WITH_CATEGORY = gql`
       content
       createdAt
       published
+      comment {
+          createdAt
+          content
+          user {
+              id
+              name
+          }
+      }  
       user {
         id
         name

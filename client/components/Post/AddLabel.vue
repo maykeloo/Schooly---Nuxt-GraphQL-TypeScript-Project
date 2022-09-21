@@ -1,28 +1,22 @@
-<script lang="ts" setup>
-import Modal from "../Modal.vue";
-import { ref } from "vue";
-import { useMutation } from "@vue/apollo-composable";
-import { POST_CREATE } from "~/api/mutations";
-import {GET_PROFILE} from "~/api/queries";
-import { useRoute, RouteLocationNormalizedLoaded } from "vue-router";
+<script setup lang="ts">
+import {ref} from "vue";
+import {useMutation} from "@vue/apollo-composable";
+import {POST_CREATE} from "~/api/mutations";
+import {GET_POSTS, GET_PROFILE} from "~/api/queries";
 
 interface PostVariables {
   title: string;
   content: string;
 }
 
-const route = useRoute();
-const { params }: RouteLocationNormalizedLoaded = route;
-
 const content = ref<string>("");
 const title = ref<string>("");
 const category = ref<string>("");
 const categories = ref<string[]>([]);
-const categoriesError = ref<string>("") 
-const categoriesLengthError = ref<boolean>(false) 
+const categoriesError = ref<string>("")
+const categoriesLengthError = ref<boolean>(false)
 
 const show = ref<boolean>(false);
-const handleShow = (): boolean => (show.value = true);
 const handleClose = (): boolean => (show.value = false);
 
 const { mutate: postCreate, error, loading, onDone } = useMutation(POST_CREATE, () => ({
@@ -35,12 +29,9 @@ const { mutate: postCreate, error, loading, onDone } = useMutation(POST_CREATE, 
   },
   refetchQueries: [
     {
-      query: GET_PROFILE,
-      variables: {
-        userId: params.id,
-      },
-    }
-  ]
+      query: GET_POSTS,
+    },
+  ],
 }));
 
 onDone(() => {
@@ -73,56 +64,42 @@ const deleteCategory = (index) => {
   categoriesCopy.splice(index, 1)
   categories.value = categoriesCopy
 }
-
 </script>
 
 <template>
-  <button @click="handleShow" class="button-add-post">Add Post</button>
-  <modal v-if="show">
-    <template #body>
-      <button @click="handleClose" class="button-close-modal"><img src="@/assets/icons/icon-close.svg" alt=""></button>
-      <div class="form">
-        <img class="avatar" src="@/assets/icons/icon-avatar.png" alt="">
-        <form type="form" id="registration-example">
-          <div class="form-content">
-            <input type="text" name="name" placeholder="title" validation="required" v-model="title" />
-            <input type="text" name="category" placeholder="category" validation="required|email" v-model="category" />
-            <div class="categories-wrapper">
+  <div class="form">
+    <img class="avatar" src="@/assets/icons/icon-avatar.png" alt="">
+    <form type="form" id="registration-example">
+      <div class="form-content">
+        <input type="text" name="name" placeholder="title" v-model="title" />
+        <input type="text" name="category" placeholder="category"  v-model="category" />
+        <div class="categories-wrapper">
               <span v-for="(category, index) in categories" class="category">
                 <span>{{ category }}</span>
                 <span @click="deleteCategory(index)"><img src="@/assets/icons/icon-close.svg" alt=""></span>
             </span>
-            </div>
-            <span class="categories-error" v-if="categoriesLengthError">{{ categoriesError }}</span>
-            <button class="button-add-category" @click.prevent="addCategory()">Add category</button>
-            <textarea name="content" placeholder="content" validation="required|email" v-model="content" />
-            <div class="buttons-wrapper">
-              <button class="button-add-post" @click.prevent="postCreate()" type="submit">Add post</button>
-            </div>
-          </div>
-        </form>
+        </div>
+        <span class="categories-error" v-if="categoriesLengthError">{{ categoriesError }}</span>
+        <button class="button-add-category" @click.prevent="addCategory()">Add category</button>
+        <textarea name="content" placeholder="content" v-model="content" />
+        <div class="buttons-wrapper">
+          <button class="button-add-post" @click.prevent="postCreate()" type="submit">Add post</button>
+        </div>
       </div>
-      <div class="loader-wrapper">
-        <img v-if="loading" class="loader" src="@/assets/icons/loader.svg" alt=""/>
-      </div>
-    </template>
-  </modal>
+    </form>
+  </div>
+  <div class="loader-wrapper">
+    <img v-if="loading" class="loader" src="@/assets/icons/loader.svg" alt=""/>
+  </div>
 </template>
 
 <style scoped lang="scss">
-.form:deep(.formkit-form) {
-  margin-top: 2rem;
-}
-
 .form {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
 
   > form {
-    flex-grow: 1
+    max-width: 100%;
   }
-  
+
   .avatar {
     object-fit: contain;
   }
@@ -187,6 +164,8 @@ input[type=text] ,textarea {
 
 textarea {
   min-height: 100px;
+  max-width: 100%;
+  min-width: 100%;
 }
 
 .buttons-wrapper {
@@ -200,30 +179,43 @@ textarea {
   &-post, &-category {
     padding: 0.5rem 2rem;
     border: 1px solid black;
+    font-size: 1.4rem;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &-post {
     background: black;
     color: white;
-    font-size: 1.4rem;
-  
+
     &:hover {
       background: white;
       color: black;
-      cursor: pointer;
+    }
+  }
+
+  &-category {
+    background: white;
+
+    &:hover {
+      background: #ccc;
     }
   }
 }
 
 .button-close-modal {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: transparent;
-    border: 0;
-    outline: none;
-    cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: transparent;
+  border: 0;
+  outline: none;
+  cursor: pointer;
 
-    img {
-      width: 2rem;
-    }
+  img {
+    width: 2rem;
+  }
 }
-
 </style>

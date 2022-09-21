@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { useQuery } from "@vue/apollo-composable";
+import { useQuery, useSubscription } from "@vue/apollo-composable";
 import getToken from "~~/utils/getToken";
-import { GET_POSTS, GET_PROFILE_DETAILS } from "~/api/queries";
+import { GET_POSTS } from "~/api/queries";
+import { COMMENTS_SUBSCRIPTION } from "~~/api/subscriptions";
 import { JWT } from '@/utils/getToken'
 import {definePageMeta} from "#imports";
+import {ref} from "vue";
+import PageLabel from "~/components/Nav/PageLabel.vue";
 
 definePageMeta({
   middleware: "auth",
@@ -14,19 +17,14 @@ const userInfo = ref<JWT>()
 if(process.client) {
   userInfo.value = await getToken()
 }
-const { result: profileResult } = useQuery(GET_PROFILE_DETAILS, {
-  userId: userInfo?.value?.userId,
-}); 
-
 
 </script>
 
 <template>
   <NuxtLayout name="threeview">
     <template #main>
-      <div v-if="profileResult?.profile?.isMyProfile">
-        <PostAddModal />
-      </div>
+      <PageLabel :page-name="'Home'"></PageLabel>
+      <PostAddLabel></PostAddLabel>
       <PostList :result="postResult?.posts" :loading="loading" :error="error"></PostList>
     </template>
   </NuxtLayout>

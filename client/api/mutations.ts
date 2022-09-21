@@ -44,10 +44,28 @@ export const POST_CREATE = gql`
                 content
                 categories {
                     category {
-                        id
                         name
                     }
                 }
+            }
+        }
+    }
+`
+
+export const COMMENT_CREATE = gql`
+    mutation($comment: CommentInput!) {
+        commentCreate(comment: $comment) {
+            comment {
+                userId
+                postId
+                content
+                user {
+                    id
+                    name
+                }
+            }
+            userErrors {
+                message
             }
         }
     }

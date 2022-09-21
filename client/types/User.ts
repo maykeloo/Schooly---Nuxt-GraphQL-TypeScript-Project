@@ -17,6 +17,7 @@ export interface Post {
     content:       string
     published:     boolean
     createdAt:     string
+    comment:       Comment[]
     user:          User
     categories:    Category[]
 }

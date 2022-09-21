@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ApolloError } from '@apollo/client/errors';
 import { Post, User } from '~~/types/User';
+import {inject} from "#imports";
 
 interface ListProps {
   result: Post[],
@@ -15,18 +16,19 @@ const loadingPublish = inject<boolean>('loadingPublish')
 </script>
 
 <template>
-  <p v-if="loading"><img src="@/assets/icons/loader.svg" alt=""></p>
+  <p v-if="loading" class="loader"><img src="@/assets/icons/loader.svg" alt=""></p>
   <div v-else-if="!error && !loading" class="post-wrapper">
     <p class="list-loader" v-if="loadingPublish || loadingDelete"><img src="@/assets/icons/loader.svg" alt=""></p>
     <PostBox 
       v-for="(post, index) in props.result"
       @publish="$emit('publish', post.id)"
       @delete="$emit('delete', post.id)"
-      :user="post.user" 
+      :user="post.user || props.user"
       :key="index"
       :id="post.id" 
       :index="index"
-      :title="post.title" 
+      :title="post.title"
+      :comment="post.comment"
       :createdAt="post.createdAt"
       :published="post.published"
       :isMyProfile="props.isMyProfile"
@@ -49,6 +51,17 @@ const loadingPublish = inject<boolean>('loadingPublish')
       width: 5rem;
     }
   }
+
+  .loader {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+
+    img {
+      width: 3rem;
+    }
+  }
+
   .post-wrapper {
     display: flex;
     flex-direction: column;

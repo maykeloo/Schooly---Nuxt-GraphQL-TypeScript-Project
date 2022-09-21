@@ -81,11 +81,11 @@ provide('loadingDelete', loadingDelete)
               </div>
             </div>
             <PostList 
-              :result="result.profile.user.posts" 
-              :user="result.user"
               @publish="publishP"
               @delete="deleteP"
-              :id="result.profile.user.id" 
+              :result="result.profile.user.posts"
+              :user="result.profile.user"
+              :id="result.profile.user.id"
               :error="error" 
               :loading="loading" 
               :isMyProfile="result.profile.isMyProfile"

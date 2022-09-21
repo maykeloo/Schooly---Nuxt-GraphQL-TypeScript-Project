@@ -51,7 +51,7 @@ export const post = {
             }
         })
 
-        categories.forEach(async (category) => {
+        for (const category of categories) {
             await prisma.categoriesOnPosts.create({
                 data: {
                     post: {
@@ -66,7 +66,7 @@ export const post = {
                     },
                 }
             })
-        })
+        }
 
         return {
             userErrors: [],
@@ -174,7 +174,6 @@ export const post = {
     },
     postPublish: async (_: any, { postId }: PostArgs, { prisma, userInfo }: Context) => {
         const error = await canUserMutatePost({ userId: userInfo!.userId, postId: postId, prisma });
-        console.log(postId)
         if(error) return error
          
         if(!userInfo) {

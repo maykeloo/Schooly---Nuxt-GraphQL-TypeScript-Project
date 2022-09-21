@@ -20,6 +20,18 @@ export const Post = {
   user: (parent: PostParent) => {
     return userLoader.load(parent.authorId);
   },
+  comment: (parent: PostParent, __: any, { prisma }: Context) => {
+    return prisma.comment.findMany({
+      where: {
+        postId: parent.id
+      },
+      orderBy: [
+        {
+          createdAt: "desc"
+        },
+      ]
+    })
+  },
   categories: async (parent: PostParent, __: any, { prisma }: Context) => {
     const categoriesForPost = await prisma.category.findMany({
       where: {

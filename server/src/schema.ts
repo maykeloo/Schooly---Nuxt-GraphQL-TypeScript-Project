@@ -19,6 +19,18 @@ export const typeDefs = gql`
         signUp(user: SignUpInput!): UserPayload!
         signIn(user: SignInInput!): UserPayload!
         categoryCreate(name: String!): CategoryPayload!
+        commentCreate(comment: CommentInput!): CommentPayload!
+    }
+    
+    type Comment {
+        id:        ID!      
+        postId:    ID!
+        createdAt: String!
+        published: Boolean
+        updatedAt: String
+        userId:    ID!
+        content:   String
+        user:      User
     }
 
     type Post {
@@ -28,6 +40,7 @@ export const typeDefs = gql`
         published:  Boolean!
         createdAt:  String!     
         user:       User
+        comment:    [Comment]
         categories: [CategoriesOnPosts]
     }
 
@@ -75,6 +88,15 @@ export const typeDefs = gql`
         category:        Category
     }
 
+    type Subscription {
+        commentAdded(postId: ID!): Comment
+    }
+    
+    type CommentPayload {
+        userErrors: [UserError!]!
+        comment: Comment
+    }
+
     type UserPayload {
         userErrors: [UserError!]!
         token: String
@@ -95,6 +117,12 @@ export const typeDefs = gql`
     input SignInInput {
         email:      String!
         password:   String!
+    }
+    
+    input CommentInput {
+        postId:     ID!
+        userId:     ID!
+        content:    String!
     }
 
     input CategoryInput {

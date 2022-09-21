@@ -1,3 +1,9 @@
+<script lang="ts" setup>
+defineEmits<{
+  (e: 'search'): void
+}>()
+</script>
+
 <template>
   <div class="sidebar-wrapper">
     <div class="header">
@@ -7,12 +13,12 @@
     </div>
     <div class="nav-wrapper">
       <nav>
-        <NavList/>
+        <NavList @search="$emit('search')"/>
       </nav>
     </div>
   </div>
 </template>
-1
+
 <style scoped lang="scss">
 .sidebar-wrapper {
   display: flex;
