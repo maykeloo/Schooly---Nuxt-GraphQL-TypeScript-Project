@@ -1,44 +1,80 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import { ref } from "vue";
 
 defineEmits<{
-  (e: 'search'): void
-}>()
+  (e: "search"): void;
+}>();
 
 enum SearchBy {
-  CATEGORY = 'category',
-  USER = 'user',
-  COMMENT = 'comment'
+  CATEGORY = "category",
+  USER = "user",
+  COMMENT = "comment",
+  POST = "post"
 }
 
-type SearchByType = SearchBy.COMMENT | SearchBy.USER | SearchBy.CATEGORY
+type SearchByType = SearchBy.COMMENT | SearchBy.USER | SearchBy.CATEGORY;
 
-const searchBy = ref<SearchByType>()
+const searchBy = ref<SearchByType>();
+const searchValue = ref<string>();
+
+const typeError = ref<boolean>(false);
+const valueError = ref<boolean>(false);
+
 const setSearchBy = (type) => {
-    searchBy.value = type
-}
+  typeError.value = false;
+  searchBy.value = type;
+};
+
+const search = () => {
+  if (!searchBy.value) typeError.value = true;
+  if (!searchValue.value) valueError.value = true;
+
+  if (!typeError.value && !valueError.value) {
+    window.location.href = `/search/${searchBy.value}/${searchValue.value}`;
+    typeError.value = false;
+    valueError.value = false;
+  }
+};
 </script>
 
 <template>
-    <div class="modal-overlay">
-      <div class="modal">
-        <h6>Search by</h6>
-        <div class="search-by-buttons">
-          <span :class="{active: searchBy === SearchBy.CATEGORY}" @click="setSearchBy(SearchBy.CATEGORY)">Category</span>
-          <span :class="{active: searchBy === SearchBy.USER}" @click="setSearchBy(SearchBy.USER)">User</span>
-          <span :class="{active: searchBy === SearchBy.COMMENT}" @click="setSearchBy(SearchBy.COMMENT)">Comment</span>
-        </div>
-        <input type="text" placeholder="search...">
-        <button>Search</button>
-        <div class="close"  @click="$emit('search')">
-          <img class="close-img" src="@/assets/icons/icon-close.svg" alt="" />
-        </div>
+  <div class="modal-overlay">
+    <div class="modal">
+      <h6>Search by</h6>
+      <div class="search-by-buttons">
+        <span
+          :class="{ active: searchBy === SearchBy.CATEGORY }"
+          @click="setSearchBy(SearchBy.CATEGORY)"
+          >Category</span
+        >
+        <span
+          :class="{ active: searchBy === SearchBy.USER }"
+          @click="setSearchBy(SearchBy.USER)"
+          >User</span
+        >
+        <span
+          :class="{ active: searchBy === SearchBy.COMMENT }"
+          @click="setSearchBy(SearchBy.COMMENT)"
+          >Comment</span
+        >
+        <span
+          :class="{ active: searchBy === SearchBy.POST }"
+          @click="setSearchBy(SearchBy.POST)"
+          >Post</span
+        >
+      </div>
+      <p class="error" v-if="typeError">Type has not been choosen.</p>
+      <input v-model="searchValue" @click="valueError = false" type="text" placeholder="search..." />
+      <p class="error" v-if="valueError">Invalid value.</p>
+      <span class="button" @click="search">Search</span>
+      <div class="close" @click="$emit('search')">
+        <img class="close-img" src="@/assets/icons/icon-close.svg" alt="" />
       </div>
     </div>
+  </div>
 </template>
 
 <style scoped lang="scss">
-
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -71,7 +107,6 @@ const setSearchBy = (type) => {
   right: 1rem;
 }
 
-
 h6 {
   font-weight: 500;
   font-size: 2rem;
@@ -82,12 +117,14 @@ h6 {
   gap: 1rem;
   width: 80%;
   margin: 0 auto;
+  flex-wrap: wrap;
 
   > span {
     display: block;
     padding: 1rem 2rem;
     background: black;
     color: white;
+    flex-grow: 1;
     width: 33%;
     border: 1px solid black;
 
@@ -100,7 +137,6 @@ h6 {
         background: #ccc;
       }
     }
-
 
     &:hover {
       background: white;
@@ -122,7 +158,7 @@ input {
   }
 }
 
-button {
+.button {
   margin: 0 auto;
   width: 80%;
   padding: 1rem;
@@ -134,4 +170,7 @@ button {
   font-weight: 500;
 }
 
+.error {
+  color: red;
+}
 </style>

@@ -1,5 +1,5 @@
 import { defineNuxtPlugin } from "#app"
-import {ApolloClient, createHttpLink, InMemoryCache} from "@apollo/client/core"
+import {ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client/core"
 import { DefaultApolloClient } from "@vue/apollo-composable"
 import {setContext} from "@apollo/client/link/context";
 
@@ -10,7 +10,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   })
 
   const authLink = setContext((_, { headers }) => {
-    const token = localStorage.getItem("token")
+    const token = localStorage.getItem("token") 
 
     return {
       headers: {

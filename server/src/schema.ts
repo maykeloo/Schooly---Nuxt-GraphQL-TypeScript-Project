@@ -7,7 +7,10 @@ export const typeDefs = gql`
         userPosts(userId: ID!): [Post!]
         me: MePayload
         profile(userId: ID!): Profile
+        profileByName(name: String!): [Profile]
         categories: [CategoriesOnPosts!]
+        postsByContent(text: String!): [Post]
+        comments(text: String!): [Comment]
         postWithCategory(category: String!): [Post!]
     }
 
@@ -42,12 +45,13 @@ export const typeDefs = gql`
         user:       User
         comment:    [Comment]
         categories: [CategoriesOnPosts]
-    }
+    }   
 
     type User {
         id:         ID!
         email:      String!   
         name:       String!
+        nameEN:     String!
         password:   String!
         createdAt:  String!   
         profile:    Profile!
@@ -90,16 +94,16 @@ export const typeDefs = gql`
 
     type Subscription {
         commentAdded(postId: ID!): Comment
-    }
+    }   
     
     type CommentPayload {
         userErrors: [UserError!]!
-        comment: Comment
+        comment:    Comment
     }
 
     type UserPayload {
         userErrors: [UserError!]!
-        token: String
+        token:      String
     }
 
     type MePayload {
@@ -109,7 +113,7 @@ export const typeDefs = gql`
 
     input SignUpInput {
         name:       String!
-        email:      String!   
+        email:      String!  
         password:   String!
         bio:        String!
     }

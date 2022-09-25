@@ -2,7 +2,6 @@
 import { useQuery, useSubscription } from "@vue/apollo-composable";
 import getToken from "~~/utils/getToken";
 import { GET_POSTS } from "~/api/queries";
-import { COMMENTS_SUBSCRIPTION } from "~~/api/subscriptions";
 import { JWT } from '@/utils/getToken'
 import {definePageMeta} from "#imports";
 import {ref} from "vue";

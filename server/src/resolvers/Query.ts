@@ -88,22 +88,103 @@ export const Query = {
             ...profile, isMyProfile,
         };
     }, 
+    profileByName: async (_: any, {name}: { name: string }, { prisma }: Context) => {
+        const replacedName = name.replace(/%20/g, '');;
+        const profile = await prisma.profile.findMany({
+            where: {
+               OR: [
+                {
+                    user: {
+                        nameEN: {
+                            contains: replacedName,
+                            mode: 'insensitive'
+                        }
+                    }
+                },
+                {
+                    user: {
+                        name: {
+                            contains: replacedName,
+                            mode: 'insensitive'
+                        }
+                    }
+                },
+               ]
+            }
+        })
+        if(!profile) return {
+            profile: null,
+            userErrors: [
+                {
+                    message: 'User not found'
+                }
+            ]
+        }
+        return profile
+    },
     categories: (_: any, { userId }: { userId: string }, { prisma }: Context) => {
         return prisma.category.findMany()
     },
-    postWithCategory: (_: any, { category }: { category: string }, { prisma }: Context) => {
-        return prisma.post.findMany({
+    comments: async (_: any, { text }: { text: string }, { prisma }: Context) => {
+        const comments = await prisma.comment.findMany({
+            where: {
+                content: {
+                    contains: text,
+                    mode: 'insensitive'
+                }
+            }
+        })
+        if(!comments) {
+            return {
+                comments: null,
+                userErrors: [
+                    {
+                        message: 'Comment not found'
+                    }
+                ]
+            }
+        }
+
+        return comments
+    },
+    postWithCategory: async (_: any, { category }: { category: string }, { prisma }: Context) => {
+        const replacedCategory = category.replace(/%20/g, '');;
+        const posts = await prisma.post.findMany({
             where: {
                 categories: {
                     some: {
                         category: {
                             name: {
-                                contains: category
+                                contains: replacedCategory,
+                                mode: "insensitive"
                             }
                         }
                     }
                 }
             }
         })
+        return posts
+    },
+    postsByContent: async (_: any, { text }: { text: string }, { prisma }: Context) => {
+        const replacedText = text.replace(/%20/g, '');;
+        const posts = await prisma.post.findMany({
+            where: {
+              OR: [
+                {
+                    content: {
+                        contains: replacedText,
+                        mode: 'insensitive'
+                    }
+                },
+                {
+                    title: {
+                        contains: replacedText,
+                        mode: 'insensitive'
+                    }
+                }
+              ]
+            }
+        })
+        return posts
     }
 }

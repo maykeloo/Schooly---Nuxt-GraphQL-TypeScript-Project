@@ -1,18 +1,14 @@
 <script lang="ts" setup>
-import {ref} from "vue";
 import Search from "~/components/Search.vue";
+import useSearchComponent from '@/composables/searchComponent'
 
-const searchVisible = ref<boolean>(false)
-const toggleSearch = () => {
-  searchVisible.value = !searchVisible.value
-}
-
+const { toggleVisible, isVisible } = useSearchComponent()
 </script>
 
 <template>
   <div class="App">
-    <Search @search="toggleSearch()" v-if="searchVisible"/>
-    <div class="nav-sides left"><NavLeft @search="toggleSearch()"/></div>
+    <Search @search="toggleVisible" v-if="isVisible"/>
+    <div class="nav-sides left"><NavLeft @search="toggleVisible"/></div>
     <div class="nav-main"><slot name="main"></slot></div>
     <div class="nav-sides right"><NavRight/></div>
   </div>

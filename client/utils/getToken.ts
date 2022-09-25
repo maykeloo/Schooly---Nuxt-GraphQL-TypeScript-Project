@@ -7,8 +7,8 @@ export interface JWT {
 }
 
 const getToken = async (): Promise<JWT> => {
-    const token: string = await localStorage.getItem('token');
     try {
+        const token: string = await localStorage.getItem('token');
         return jwt_decode(token)
     } catch(error) {
         return null

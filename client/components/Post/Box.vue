@@ -55,18 +55,18 @@ const addC = async () => {
   })
   content.value = "";
 }
-const toManyComments = ref<boolean>(true)
-const commentsList = computed(() => {
-  const list = [];
-  const VISIBLE_LIST_LENGTH = 3
-  if(props.comment.length > VISIBLE_LIST_LENGTH) {
-    toManyComments.value = true
-    for(let i = 0; i < VISIBLE_LIST_LENGTH; i++) {
-      list.push(props.comment[i])
-    }
-  }
-  return list
-})
+// const toManyComments = ref<boolean>(true)
+// const commentsList = computed(() => {
+//   const list = [];
+//   const VISIBLE_LIST_LENGTH = 3
+//   if(props.comment.length < VISIBLE_LIST_LENGTH) {
+//     toManyComments.value = true
+//     for(let i = 0; i < VISIBLE_LIST_LENGTH; i++) {
+//       list.push(props.comment[i])
+//     }
+//   }
+//   return list
+// })
 
 </script>
 
@@ -111,20 +111,21 @@ const commentsList = computed(() => {
           <textarea placeholder="comment..." v-model="content"/>
           <button @click.prevent="addC"><img src="@/assets/icons/icon-add-post.svg" alt=""></button>
         </div>
-        <div class="comment" v-for="com in toManyComments ? commentsList : props.comment">
+        <div class="comment" v-for="com in props.comment"> 
+          <!-- toManyComments ? commentsList : props.comment -->
           <div class="comment-top">
             <a :href="`/profile/${com.user?.id}`">
               <img class="commenter-avatar" src="@/assets/icons/icon-avatar.png" alt="">
               <span class="commenter-name">{{ com.user?.name }}</span>
             </a>
             <span>&middot;</span>
-            <span class="createdAt">{{ timeSince(com.createdAt) }} ago</span>
+            <span class="createdAt">{{ timeSince(+com.createdAt) }} ago</span>
           </div>
           <p class="comment-content">{{ com.content }}</p>
         </div>
-        <p v-if="props.comment.length > 3" class="show" :class="{less: !toManyComments}" @click="toManyComments = !toManyComments">
+        <!-- <p v-if="props.comment.length > 3" class="show" :class="{less: !toManyComments}" @click="toManyComments = !toManyComments">
           {{ toManyComments ? 'Show more...' : 'Show less...' }}
-        </p>
+        </p> -->
       </div>
     </div>
 </template>
