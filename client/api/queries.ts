@@ -88,6 +88,11 @@ export const GET_POST = gql`
       id
       title
       content
+      createdAt
+      user {
+        id
+        name
+      }
       comment {
         content
         userId

@@ -32,7 +32,6 @@ const getData = (): Data => {
       return byPost(route);
   }
 };
-
 const { error, loading, result } = await getData();
 </script>
 

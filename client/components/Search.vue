@@ -132,10 +132,6 @@ h6 {
       background: white;
       color: black;
       cursor: pointer;
-
-      &:hover {
-        background: #ccc;
-      }
     }
 
     &:hover {

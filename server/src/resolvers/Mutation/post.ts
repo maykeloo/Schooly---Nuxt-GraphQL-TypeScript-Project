@@ -161,6 +161,11 @@ export const post = {
                 }
             }
         })
+        await prisma.comment.deleteMany({
+            where: {
+                postId: Number(postId)
+            }
+        })
         await prisma.post.delete({
             where: {
                 id: Number(postId)

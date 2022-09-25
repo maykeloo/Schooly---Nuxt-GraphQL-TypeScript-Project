@@ -56,10 +56,12 @@ const logOut = () => {
         <span>Profile</span>
       </li>
     </a>
-    <li>
-      <img src="@/assets/icons/icon-settings.png" alt="" />
-      <span>Settings</span>
-    </li>
+    <a href="/settings">
+      <li>
+        <img src="@/assets/icons/icon-settings.png" alt="" />
+        <span>Settings</span>
+      </li>
+    </a>
     <li @click="logOut()">
       <img src="@/assets/icons/icon-logout.svg" alt="">
       <span>Log out</span>

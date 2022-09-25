@@ -54,11 +54,12 @@ provide('loadingDelete', loadingDelete)
 </script>
 
 <template>
-  <div v-if="result">
+  <div>
     <div>
       <div>
         <NuxtLayout name="threeview">
           <template #main>
+            <div v-if="result">
             <div class="user-info">
               <div>
                 <div>
@@ -90,16 +91,26 @@ provide('loadingDelete', loadingDelete)
               :loading="loading" 
               :isMyProfile="result.profile.isMyProfile"
             />
+          </div>
+          <p v-if="!loading && error">Profile not found.</p>
+          <p v-if="loading" class="loader"><img src="@/assets/icons/loader.svg" alt=""></p>
           </template>
         </NuxtLayout>
       </div>
     </div>
   </div>
-  <p v-else-if="loading"><img src="@/assets/icons/loader.svg" alt=""></p>
-  <p v-else-if="error">Profile not found.</p>
 </template>
 
 <style scoped lang="scss">
+
+.loader {
+  display: flex;
+  justify-content: center;
+
+  img {
+    width: 4rem;
+  }
+}
 
   .user-info {
     display: flex;

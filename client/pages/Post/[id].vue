@@ -4,13 +4,7 @@ import { useQuery, UseQueryReturn } from "@vue/apollo-composable";
 import { GET_POST } from "~/api/queries";
 
 const { params }: RouteLocationNormalizedLoaded = useRoute();
-const {
-  result,
-  loading,
-  error,
-  onResult,
-}: UseQueryReturn<any, { postId: string | string[] }> = await useQuery(
-  GET_POST,
+const { result, loading, error, onResult}: UseQueryReturn<any, { postId: string | string[] }> = await useQuery(GET_POST,
   {
     postId: params.id,
   }
@@ -24,7 +18,7 @@ const {
         <NuxtLayout name="threeview">
           <template #main>
             <PostBox 
-            v-for="(post, index) in result"
+              v-for="(post, index) in result"
                   :user="post.user"
                   :key="index"
                   :id="post.id" 

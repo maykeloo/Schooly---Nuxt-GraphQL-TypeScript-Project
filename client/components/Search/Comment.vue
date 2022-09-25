@@ -56,7 +56,7 @@ const boldText = (comment) => {
         </div>
       </template>
     </div>
-    <SearchError v-else :notfound="'Category'" />
+    <SearchError v-else :notfound="'Comment'" />
     <p v-if="loading" class="loader">
       <img src="@/assets/icons/loader.svg" alt="" />
     </p>

@@ -166,7 +166,7 @@ export const Query = {
         return posts
     },
     postsByContent: async (_: any, { text }: { text: string }, { prisma }: Context) => {
-        const replacedText = text.replace(/%20/g, '');;
+        const replacedText = text.replace(/%20/g, '');
         const posts = await prisma.post.findMany({
             where: {
               OR: [
@@ -185,6 +185,7 @@ export const Query = {
               ]
             }
         })
+        console.log(posts)
         return posts
     }
 }
