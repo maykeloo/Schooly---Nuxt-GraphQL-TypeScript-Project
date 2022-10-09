@@ -49,16 +49,31 @@ model CategoriesOnPosts {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  email     String    @unique
-  name      String
-  nameEN    String
-  password  String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  posts     Post[]
-  profile   Profile?
-  Comment   Comment[]
+  id                 Int             @id @default(autoincrement())
+  email              String          @unique
+  name               String
+  nameEN             String
+  password           String
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+  posts              Post[]
+  profile            Profile?
+  Comment            Comment[]
+  userBlocked        UsersBlocking[] @relation(name: "users")
+  blockedUserBlocked UsersBlocking[] @relation(name: "blocked_users")
+}
+
+model UsersBlocking {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  blockedId Int
+  user      User     @relation(name: "users", fields: [userId], references: [id])
+  blocked    User     @relation(name: "blocked_users", fields: [blockedId], references: [id])
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, blockedId])
 }
 
 model Profile {

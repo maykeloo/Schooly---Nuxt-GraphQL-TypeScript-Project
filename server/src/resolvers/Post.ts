@@ -33,19 +33,14 @@ export const Post = {
     })
   },
   categories: async (parent: PostParent, __: any, { prisma }: Context) => {
+    console.log(parent.id)
     const categoriesForPost = await prisma.category.findMany({
       where: {
-        posts: {
-          every: {
-            post: {
-              categories: {
-                every: {
-                  postId: parent.id,
-                },
-              },
-            },
-          },
-        },
+       posts: {
+        every: {
+          categoryId: parent.id
+        }
+       }
       },
     });
 

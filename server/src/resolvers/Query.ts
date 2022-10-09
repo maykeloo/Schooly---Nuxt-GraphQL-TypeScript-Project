@@ -10,10 +10,21 @@ interface UserPayload {
 }
 
 export const Query = {
-    posts: async (_: any, __: any, {prisma}: Context): Promise<Post[]> => {
+    posts: async (_: any, __: any, {prisma, userInfo}: Context): Promise<Post[]> => {
         return await prisma.post.findMany({
             where: {
-                published: true
+                published: true,
+                AND: {
+                    author: {
+                        userBlocked: {
+                            every: {
+                                NOT: {
+                                    blockedId: userInfo?.userId
+                                }
+                            }
+                        }
+                    }
+                }
             }, orderBy: [{
                 createdAt: "desc"
             },]
@@ -148,7 +159,7 @@ export const Query = {
         return comments
     },
     postWithCategory: async (_: any, { category }: { category: string }, { prisma }: Context) => {
-        const replacedCategory = category.replace(/%20/g, '');;
+        const replacedCategory = category.replace(/%20/g, '');
         const posts = await prisma.post.findMany({
             where: {
                 categories: {

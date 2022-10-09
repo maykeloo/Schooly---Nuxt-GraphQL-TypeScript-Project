@@ -1,4 +1,22 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from 'vue';
+import SettingsModal from '../../components/Settings/SettingsModal.vue';
+
+enum EditTypes {
+      NAME = 'Name',
+      MAIL = 'Email',
+      PASSWORD = 'Password',
+      POSTS = 'Posts'
+}
+
+const editType = ref<string>();
+const modal = ref<boolean>(false);
+
+const openEditModal = (type: string) => {
+      editType.value = type;
+      modal.value = true
+}
+</script>
 
 <template>
   <NuxtLayout name="threeview">
@@ -8,22 +26,22 @@
             <div class="list-item">
                   <img src="@/assets/icons/icon-name.svg" alt="">
                   <span>Name</span>
-                  <div class="edit">Change</div>
+                  <div class="edit" @click="openEditModal(EditTypes.NAME)">Change</div>
             </div>
             <div class="list-item">
                   <img src="@/assets/icons/icon-mail.svg" alt="">
                   <span>E-mail</span>
-                  <div class="edit">Change</div>
+                  <div class="edit" @click="openEditModal(EditTypes.MAIL)">Change</div>
             </div>
             <div class="list-item">
                   <img src="@/assets/icons/icon-password.svg" alt="">
                   <span>Password</span>
-                  <div class="edit">Change</div>
+                  <div class="edit" @click="openEditModal(EditTypes.PASSWORD)">Change</div>
             </div>
             <div class="list-item">
                   <img src="@/assets/icons/icon-privacy.svg" alt="">
                   <span>Who can see and comment my posts</span>
-                  <div class="edit">Change</div>
+                  <div class="edit" @click="openEditModal(EditTypes.POSTS)">Change</div>
             </div>
             <div class="list-item">
                   <img src="@/assets/icons/icon-delete.svg" alt="">
@@ -36,7 +54,8 @@
                   <div class="edit">Delete</div>
             </div>
       </div>  
-    </template>
+      <SettingsModal @close="modal = false" v-if="modal" :type="editType"></SettingsModal>
+      </template>
   </NuxtLayout>
 </template>
 

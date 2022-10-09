@@ -23,6 +23,10 @@ export const typeDefs = gql`
         signIn(user: SignInInput!): UserPayload!
         categoryCreate(name: String!): CategoryPayload!
         commentCreate(comment: CommentInput!): CommentPayload!
+        editName(newValue: String!): NamePayload!
+        editEmail(newValue: String!): EmailPayload!
+        editPassword(newValue: String!): PasswordPayload!
+        blockUser(id: ID!): Block!
     }
     
     type Comment {
@@ -48,14 +52,21 @@ export const typeDefs = gql`
     }   
 
     type User {
-        id:         ID!
-        email:      String!   
-        name:       String!
-        nameEN:     String!
-        password:   String!
-        createdAt:  String!   
-        profile:    Profile!
-        posts:      [Post!]!
+        id:            ID!
+        email:         String!   
+        name:          String!
+        nameEN:        String!
+        password:      String!
+        createdAt:     String!   
+        profile:       Profile!
+        posts:         [Post!]!
+        userBlocked:        [UsersBlocking] 
+        blockedUserBlocked: [UsersBlocking] 
+    }
+
+    type UsersBlocking {
+        userId:    ID
+        blockedId: ID
     }
 
     type Profile {
@@ -69,6 +80,13 @@ export const typeDefs = gql`
         id:         ID!
         name:       String!
         posts:      [CategoriesOnPosts]
+    }
+
+    type Block {
+        id: ID!,
+        userId: ID!,
+        blockedId: ID!,
+        status: Boolean,
     }
 
     type CategoriesOnPosts {
@@ -106,6 +124,21 @@ export const typeDefs = gql`
         token:      String
     }
 
+    type NamePayload {
+        userErrors: [UserError!]!
+        name:       String
+    }
+
+    type EmailPayload {
+        userErrors: [UserError!]!
+        email:       String
+    }
+
+    type PasswordPayload {
+        userErrors: [UserError!]!
+        password:       String
+    }
+
     type MePayload {
         userErrors: [UserError!]!
         user:       User
@@ -129,8 +162,16 @@ export const typeDefs = gql`
         content:    String!
     }
 
+    input NameInput {
+        newName: String!
+    }
+
     input CategoryInput {
         name:   String!
+    }
+
+    input BlockUserInput {
+        id:   String!
     }
 
     input PostInput {

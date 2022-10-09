@@ -1,6 +1,6 @@
 import { ApolloServer } from "apollo-server";
 import { typeDefs } from "./schema";
-import { Query, Profile, Mutation, Post, User, Comment } from "./resolvers";
+import { Query, Profile, Mutation, Post, User, Comment, } from "./resolvers";
 import { PrismaClient, Prisma } from '@prisma/client'
 import { getUserFromToken } from "./utils/getUserFromToken";
 

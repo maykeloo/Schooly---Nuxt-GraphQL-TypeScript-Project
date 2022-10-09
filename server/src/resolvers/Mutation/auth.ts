@@ -3,6 +3,7 @@ import validator from "validator";
 import bcrypt from "bcryptjs";
 import JWT from "jsonwebtoken";
 import { JWT_SIGNATURE } from "../../keys";
+import { getEnName } from "../../utils/getEnName";
 
 interface UserArgs {
   user: {
@@ -65,19 +66,11 @@ export const Auth = {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const letters = ["ą", "ć", "ę", "ł", "ń", "ó", "ś", "ź", "ż"];
-    const replacement = ["a", "c", "e", "l", "n", "o", "s", "z", "z"];
-    let nameEN = name.toLocaleLowerCase();
-
-    for (let i = 0; i < letters.length; ++i) {
-      nameEN = nameEN.replace(letters[i], replacement[i]);
-    }
-
 
     const user = await prisma.user.create({
       data: {
         name,
-        nameEN,
+        nameEN: getEnName(name),
         email,
         password: hashedPassword,
       },
